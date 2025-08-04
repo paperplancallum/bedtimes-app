@@ -37,7 +37,7 @@ module.exports = {
         const defaultAdmin = {
           firstname: 'Admin',
           lastname: 'User', 
-          email: 'admin@bedtimes.app',
+          email: 'callum@paperplan.co',
           password: await strapi.admin.services.auth.hashPassword('BedtimesAdmin123!'),
           isActive: true,
           blocked: false,
@@ -52,7 +52,7 @@ module.exports = {
         
         console.log('=====================================');
         console.log('Default admin user created!');
-        console.log('Email: admin@bedtimes.app');
+        console.log('Email: callum@paperplan.co');
         console.log('Password: BedtimesAdmin123!');
         console.log('Please change this password after first login!');
         console.log('=====================================');
