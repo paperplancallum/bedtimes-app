@@ -18,27 +18,49 @@ module.exports = {
    */
   async bootstrap({ strapi }) {
     // Create default admin user if none exists
-    const adminCount = await strapi.query('admin::user').count();
-    
-    if (adminCount === 0) {
-      const defaultAdmin = {
-        firstname: 'Admin',
-        lastname: 'User',
-        email: 'admin@bedtimes.app',
-        password: await strapi.admin.services.auth.hashPassword('BedtimesAdmin123!'),
-        isActive: true,
-        roles: [1] // Super Admin role ID
-      };
+    try {
+      const adminUsers = await strapi.db.query('admin::user').findMany();
       
-      try {
-        await strapi.query('admin::user').create({ data: defaultAdmin });
-        console.log('Default admin user created successfully');
+      if (!adminUsers || adminUsers.length === 0) {
+        console.log('No admin users found. Creating default admin...');
+        
+        // Get the super admin role
+        const superAdminRole = await strapi.db.query('admin::role').findOne({
+          where: { code: 'strapi-super-admin' }
+        });
+        
+        if (!superAdminRole) {
+          console.error('Super admin role not found!');
+          return;
+        }
+        
+        const defaultAdmin = {
+          firstname: 'Admin',
+          lastname: 'User', 
+          email: 'admin@bedtimes.app',
+          password: await strapi.admin.services.auth.hashPassword('BedtimesAdmin123!'),
+          isActive: true,
+          blocked: false,
+          preferedLanguage: 'en',
+          roles: [superAdminRole.id]
+        };
+        
+        const createdAdmin = await strapi.db.query('admin::user').create({
+          data: defaultAdmin,
+          populate: ['roles']
+        });
+        
+        console.log('=====================================');
+        console.log('Default admin user created!');
         console.log('Email: admin@bedtimes.app');
         console.log('Password: BedtimesAdmin123!');
-        console.log('IMPORTANT: Change this password after first login!');
-      } catch (error) {
-        console.error('Failed to create default admin:', error);
+        console.log('Please change this password after first login!');
+        console.log('=====================================');
+      } else {
+        console.log(`Found ${adminUsers.length} existing admin user(s)`);
       }
+    } catch (error) {
+      console.error('Error during admin user creation:', error);
     }
   },
 };
