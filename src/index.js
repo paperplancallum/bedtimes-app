@@ -16,5 +16,29 @@ module.exports = {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  bootstrap(/*{ strapi }*/) {},
+  async bootstrap({ strapi }) {
+    // Create default admin user if none exists
+    const adminCount = await strapi.query('admin::user').count();
+    
+    if (adminCount === 0) {
+      const defaultAdmin = {
+        firstname: 'Admin',
+        lastname: 'User',
+        email: 'admin@bedtimes.app',
+        password: await strapi.admin.services.auth.hashPassword('BedtimesAdmin123!'),
+        isActive: true,
+        roles: [1] // Super Admin role ID
+      };
+      
+      try {
+        await strapi.query('admin::user').create({ data: defaultAdmin });
+        console.log('Default admin user created successfully');
+        console.log('Email: admin@bedtimes.app');
+        console.log('Password: BedtimesAdmin123!');
+        console.log('IMPORTANT: Change this password after first login!');
+      } catch (error) {
+        console.error('Failed to create default admin:', error);
+      }
+    }
+  },
 };
