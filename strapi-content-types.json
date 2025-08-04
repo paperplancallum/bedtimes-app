@@ -1,0 +1,119 @@
+{
+  "contentTypes": {
+    "edition": {
+      "displayName": "Edition",
+      "singularName": "edition",
+      "pluralName": "editions",
+      "attributes": {
+        "volumeNumber": {
+          "type": "integer",
+          "required": true,
+          "unique": true,
+          "min": 1
+        },
+        "coverImageURL": {
+          "type": "text",
+          "required": false
+        },
+        "isActive": {
+          "type": "boolean",
+          "default": true
+        },
+        "sortOrder": {
+          "type": "integer",
+          "default": 0
+        },
+        "stories": {
+          "type": "relation",
+          "relation": "oneToMany",
+          "target": "api::story.story",
+          "mappedBy": "edition"
+        }
+      }
+    },
+    "story": {
+      "displayName": "Story",
+      "singularName": "story",
+      "pluralName": "stories",
+      "attributes": {
+        "title": {
+          "type": "string",
+          "required": true
+        },
+        "description": {
+          "type": "text",
+          "required": true
+        },
+        "imageURL": {
+          "type": "text",
+          "required": false
+        },
+        "narrationURL": {
+          "type": "text",
+          "required": true
+        },
+        "backingTrackURL": {
+          "type": "text",
+          "required": true
+        },
+        "combinedTrackURL": {
+          "type": "text",
+          "required": true
+        },
+        "duration": {
+          "type": "integer",
+          "required": true
+        },
+        "edition": {
+          "type": "relation",
+          "relation": "manyToOne",
+          "target": "api::edition.edition",
+          "inversedBy": "stories"
+        },
+        "metadata": {
+          "type": "json",
+          "required": false
+        }
+      }
+    },
+    "userSubscription": {
+      "displayName": "User Subscription",
+      "singularName": "user-subscription",
+      "pluralName": "user-subscriptions",
+      "attributes": {
+        "user": {
+          "type": "relation",
+          "relation": "oneToOne",
+          "target": "plugin::users-permissions.user"
+        },
+        "planType": {
+          "type": "enumeration",
+          "enum": ["3_month", "6_month", "annual"],
+          "required": true
+        },
+        "startDate": {
+          "type": "date",
+          "required": true
+        },
+        "endDate": {
+          "type": "date",
+          "required": true
+        },
+        "currentVolumeNumber": {
+          "type": "integer",
+          "required": true,
+          "default": 1
+        },
+        "nextVolumeDate": {
+          "type": "date",
+          "required": false
+        },
+        "status": {
+          "type": "enumeration",
+          "enum": ["active", "expired", "cancelled"],
+          "default": "active"
+        }
+      }
+    }
+  }
+}

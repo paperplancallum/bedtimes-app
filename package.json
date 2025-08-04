@@ -1,0 +1,32 @@
+{
+  "name": "bedtimes-backend",
+  "version": "1.0.0",
+  "description": "Strapi backend for Bedtimes app",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f"
+  },
+  "dependencies": {
+    "@strapi/plugin-i18n": "^4.25.23",
+    "@strapi/plugin-users-permissions": "^4.25.23",
+    "@strapi/strapi": "^4.25.23",
+    "pg": "8.11.3"
+  },
+  "author": "Bedtimes Team",
+  "engines": {
+    "node": ">=16.x.x <=20.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT",
+  "overrides": {
+    "braces": "^3.0.3",
+    "cookie": "^0.7.0",
+    "esbuild": "^0.25.0",
+    "koa": "^2.16.2"
+  }
+}
