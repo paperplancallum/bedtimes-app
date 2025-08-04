@@ -11,9 +11,11 @@
           "unique": true,
           "min": 1
         },
-        "coverImageURL": {
-          "type": "text",
-          "required": false
+        "coverImage": {
+          "type": "media",
+          "multiple": false,
+          "required": false,
+          "allowedTypes": ["images"]
         },
         "isActive": {
           "type": "boolean",
@@ -44,21 +46,29 @@
           "type": "text",
           "required": true
         },
-        "imageURL": {
-          "type": "text",
-          "required": false
+        "image": {
+          "type": "media",
+          "multiple": false,
+          "required": false,
+          "allowedTypes": ["images"]
         },
-        "narrationURL": {
-          "type": "text",
-          "required": true
+        "narration": {
+          "type": "media",
+          "multiple": false,
+          "required": true,
+          "allowedTypes": ["audios"]
         },
-        "backingTrackURL": {
-          "type": "text",
-          "required": true
+        "backingTrack": {
+          "type": "media",
+          "multiple": false,
+          "required": true,
+          "allowedTypes": ["audios"]
         },
-        "combinedTrackURL": {
-          "type": "text",
-          "required": true
+        "combinedTrack": {
+          "type": "media",
+          "multiple": false,
+          "required": true,
+          "allowedTypes": ["audios"]
         },
         "duration": {
           "type": "integer",

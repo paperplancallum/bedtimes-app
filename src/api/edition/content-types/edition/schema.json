@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "editions",
+  "info": {
+    "singularName": "edition",
+    "pluralName": "editions",
+    "displayName": "Edition",
+    "description": "Bedtime story editions/volumes"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "volumeNumber": {
+      "type": "integer",
+      "required": true,
+      "unique": true,
+      "min": 1
+    },
+    "coverImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 0
+    },
+    "stories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::story.story",
+      "mappedBy": "edition"
+    }
+  }
+}

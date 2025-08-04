@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_subscriptions",
+  "info": {
+    "singularName": "user-subscription",
+    "pluralName": "user-subscriptions",
+    "displayName": "User Subscription",
+    "description": "User subscription management"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "planType": {
+      "type": "enumeration",
+      "enum": ["three_month", "six_month", "annual"],
+      "required": true
+    },
+    "startDate": {
+      "type": "date",
+      "required": true
+    },
+    "endDate": {
+      "type": "date",
+      "required": true
+    },
+    "currentVolumeNumber": {
+      "type": "integer",
+      "required": true,
+      "default": 1
+    },
+    "nextVolumeDate": {
+      "type": "date"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["active", "expired", "cancelled"],
+      "default": "active"
+    }
+  }
+}
