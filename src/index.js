@@ -58,6 +58,25 @@ module.exports = {
         console.log('=====================================');
       } else {
         console.log(`Found ${adminUsers.length} existing admin user(s)`);
+        
+        // TEMPORARY: Reset password for first admin user
+        const firstAdmin = adminUsers[0];
+        const newPassword = await strapi.admin.services.auth.hashPassword('BedtimesAdmin123!');
+        
+        await strapi.db.query('admin::user').update({
+          where: { id: firstAdmin.id },
+          data: { 
+            password: newPassword,
+            email: 'callum@paperplan.co'
+          }
+        });
+        
+        console.log('=====================================');
+        console.log('Admin password has been reset!');
+        console.log('Email: callum@paperplan.co');
+        console.log('Password: BedtimesAdmin123!');
+        console.log('IMPORTANT: Remove this code after first login!');
+        console.log('=====================================');
       }
     } catch (error) {
       console.error('Error during admin user creation:', error);
