@@ -18,6 +18,14 @@ module.exports = ({ env }) => {
         ssl: env.bool('DATABASE_SSL', false) && {
           rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true),
         },
+        connectionTimeoutMillis: 30000,
+      },
+      pool: {
+        min: 0,
+        max: 10,
+        acquireTimeoutMillis: 60000,
+        createTimeoutMillis: 30000,
+        idleTimeoutMillis: 30000,
       },
       debug: false,
     },
@@ -27,7 +35,9 @@ module.exports = ({ env }) => {
     connection: {
       client,
       ...connections[client],
-      acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
+      acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 120000),
+      createTimeoutMillis: env.int('DATABASE_CONNECTION_TIMEOUT', 120000),
+      destroyTimeoutMillis: env.int('DATABASE_CONNECTION_TIMEOUT', 120000),
     },
   };
 };
